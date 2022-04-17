@@ -5,27 +5,32 @@ export default function TextForm(props) {
         //console.log("Uppercase was clicked" +text);
         let newText = text.toUpperCase();
         setText(newText);
+        props.showAlert("Converted to uppercase!", "Success")
     }
 
     const handleLoClick = () => {
         //console.log("Lowercase was clicked" +text);
         let newText = text.toLowerCase();
         setText(newText);
+        props.showAlert("Converted to Lowercase!", "Success")
     }
 
     const handleClear = () => {
         setText("");
+        props.showAlert("Text cleared!", "Success")
     }
 
     const handleSpaces = () => {
         let newText = text.split(/[ ]+/);
         setText(newText.join(" "))
+        props.showAlert("Extra spaces removed!", "Success")
     }
 
     const handleCopy = () => {
         let text = document.querySelector('#myBox');
         text.select();
         navigator.clipboard.writeText(text.value);
+        props.showAlert("Copied to clipboard!", "Success")
     }
 
     const handleOnChange = (event) => {
@@ -36,7 +41,7 @@ export default function TextForm(props) {
     const [text, setText] = useState(' ')
     return (
         <>
-            <div class="container">
+            <div className="container">
                 <div className="mb-3">
                     <h1>{props.heading}</h1>
                     <textarea className="form-control" id="myBox" onChange={handleOnChange} rows="8" value={text}></textarea>
@@ -49,7 +54,7 @@ export default function TextForm(props) {
             </div>
             <div className="container my-3">
                 <h2>Your Text Summary</h2>
-                <p><b>Your text contains {text.split(" ").length} words and {text.length} characters</b></p>
+                <p><b>Your text contains {text.length === 0 ? 0 : text.trim().split(/\s+/).length} words and {text.length} characters</b></p>
                 <p><b>{0.008 * text.split(" ").length} minutes read</b></p>
                 <hr />
                 <h2>Preview</h2>
